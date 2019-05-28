@@ -4,6 +4,7 @@ const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
+const debug = require('debug')('app:startup');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -16,7 +17,7 @@ console.log(`Mail Password: ${config.get('mail.password')}`);
 
 if (app.get('env') === 'development') {
 	app.use(morgan('tiny'));
-	console.log('Morgan enabled...');
+	debug('Morgan enabled...');
 }
 
 const courses = [
