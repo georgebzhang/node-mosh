@@ -1,14 +1,14 @@
 const Joi = require('@hapi/joi');
 const express = require('express');
 const app = express();
-const log = require('./log')
+const helmet = require('helmet');
+const morgan = require('morgan');
 
 app.use(express.json());
-app.use(log);
-app.use((req, res, next) => {
-	console.log('Authenticating...');
-	next();
-});
+app.use(express.urlencoded({extended: true}));
+app.use(express.static('public'));
+app.use(helmet());
+app.use(morgan('tiny'));
 
 const courses = [
 	{id: 1, name: 'course1'},
