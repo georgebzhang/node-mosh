@@ -4,11 +4,18 @@ const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+// console.log(`app.get(env): ${app.get('env')}`);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(helmet());
-app.use(morgan('tiny'));
+
+if (app.get('env') === 'development') {
+	app.use(morgan('tiny'));
+	console.log('Morgan enabled...');
+}
 
 const courses = [
 	{id: 1, name: 'course1'},
