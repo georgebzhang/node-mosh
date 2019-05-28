@@ -1,8 +1,14 @@
 const Joi = require('@hapi/joi');
 const express = require('express');
 const app = express();
+const log = require('./log')
 
 app.use(express.json());
+app.use(log);
+app.use((req, res, next) => {
+	console.log('Authenticating...');
+	next();
+});
 
 const courses = [
 	{id: 1, name: 'course1'},
