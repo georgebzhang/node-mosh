@@ -3,14 +3,16 @@ const express = require('express');
 const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
-
-// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-// console.log(`app.get(env): ${app.get('env')}`);
+const config = require('config');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(helmet());
+
+console.log(`Application Name: ${config.get('name')}`);
+console.log(`Mail Server: ${config.get('mail.host')}`);
+console.log(`Mail Password: ${config.get('mail.password')}`);
 
 if (app.get('env') === 'development') {
 	app.use(morgan('tiny'));
