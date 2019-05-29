@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost/playground')
 	.catch(err => console.log('Could not connect to MongoDB: ', err));
 
 const courseSchema = new mongoose.Schema({
-	name: String,
+	name: { type: String, required: true },
 	author: String,
 	tags: [ String ],
 	date: { type: Date, default: Date.now },
@@ -20,15 +20,21 @@ async function createCourse() {
 
 	const course = new Course({
 		// name: 'Node.js Course',
-		name: 'Angular Course',
+		// name: 'Angular Course',
 		author: 'Mosh',
 		// tags: ['node', 'backend'],
 		tags: ['angular', 'frontend'],
 		isPublished: true
 	});
 
-	const result = await course.save();
-	console.log(result);
+	try {
+		// await course.validate(); // returns promise void, not boolean
+		const result = await course.save();
+		console.log(result);
+	} catch (err) {
+		console.log(err.message);
+	}
+	
 }
 
 async function getCourses() {
@@ -78,4 +84,5 @@ async function removeCourse(id) {
 	console.log(course);
 }
 
-removeCourse('5cedf2a7fd288b49305a0648');
+createCourse();
+// removeCourse('5cedf2a7fd288b49305a0648');
