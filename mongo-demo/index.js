@@ -37,9 +37,24 @@ async function getCourses() {
 		.skip((pageNumber - 1) * pageSize)
 		.limit(pageSize)
 		.sort({ name: 1 })
-		// .select({ name: 1, tags: 1 });
-		.count();
+		.select({ name: 1, tags: 1 });
+		// .count();
 	console.log(courses);
 }
 
-getCourses();
+async function updateCourse(id) {
+	const course = await Course.findById(id);
+	if (!course) return;
+
+	// course.author = 'Another Author'
+	// course.isPublished = true;
+	course.set({
+		author: 'Another Author',
+		isPublished: true
+	});
+
+	const result = await course.save();
+	console.log(result);
+}
+
+updateCourse('5cedf2a7fd288b49305a0648');
