@@ -51,7 +51,7 @@ async function createCourse() {
 	const course = new Course({
 		// name: 'Node.js Course',
 		name: 'Angular Course',
-		category: 'web',
+		category: '-',
 		author: 'Mosh',
 		// tags: ['node', 'backend'],
 		// tags: ['angular', 'frontend'],
@@ -64,8 +64,8 @@ async function createCourse() {
 		// await course.validate(); // returns promise void, not boolean
 		const result = await course.save();
 		console.log(result);
-	} catch (err) {
-		console.log(err.message);
+	} catch (ex) {
+		for (field in ex.errors) console.log(ex.errors[field].message);
 	}
 	
 }
