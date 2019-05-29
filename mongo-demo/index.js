@@ -15,6 +15,9 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
+	const pageNumber = 2;
+	const pageSize = 10;
+
 	const course = new Course({
 		// name: 'Node.js Course',
 		name: 'Angular Course',
@@ -31,9 +34,11 @@ async function createCourse() {
 async function getCourses() {
 	const courses = await Course
 		.find({ author: 'Mosh', isPublished: true })
-		.limit(10)
+		.skip((pageNumber - 1) * pageSize)
+		.limit(pageSize)
 		.sort({ name: 1 })
-		.select({ name: 1, tags: 1 });
+		// .select({ name: 1, tags: 1 });
+		.count();
 	console.log(courses);
 }
 
